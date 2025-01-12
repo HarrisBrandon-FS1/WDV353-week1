@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const todos = [];
 
 
 `localhost:3000/api/`;
@@ -18,12 +19,13 @@ router.get('/:id', (req, res) => {
 router.post("/", (req, res) => {
         console.log('Request body >>>', req.body);
         const { data } = req.body;
+        todos.push(data);
         res.status(200).json({message: "We got the request", data})
 });
 
 `localhost:3000/api/:id`;
 router.delete('/:id', (req, res) => {
-    const todo = arrayBuffer.find(obj => obj.id == id);
+    const todo = arr.find(obj => obj.id == id);
     const id = req.params.id;
     console.log('params >>>', id)
     res.status(200).json({message: 'From the API'});
