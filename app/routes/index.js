@@ -11,8 +11,15 @@ router.get('/', (req, res) => {
 `localhost:3000/api/:id`;
 router.get('/:id', (req, res) => {
     const id = req.params.id;
-    console.log('params >>>', id)
-    res.status(200).json({message: 'Id found:', id});
+    const todoIndex = todos.indexOf(req.params.id);
+    if(todoIndex === -1) {
+        return res.status(404).json({message: 'Id not Found'});
+    }
+
+    const targetId = todos[todoIndex];
+
+
+    res.status(200).json({message: 'Id found:', targetId});
 });
 
 `localhost:3000/api/`
@@ -26,9 +33,13 @@ router.post("/", (req, res) => {
 `localhost:3000/api/:id`;
 router.delete('/:id', (req, res) => {
     const id = req.params.id;
-    const todo = todos.find(obj => obj.id == id);
-    todos.splice(id);
-    console.log('params >>>', id)
+    const todoIndex = todos.indexOf(req.params.id);
+    if(todoIndex === -1) {
+        return res.status(404).json({message: 'Id not Found'});
+    }
+
+    todos.splice(todoIndex, 1);
+    
     res.status(200).json({message: "Deleted from server:", id});
 });
 
@@ -36,7 +47,14 @@ router.delete('/:id', (req, res) => {
 `localhost:3000/api/:id`;
 router.put('/:id', (req, res) => {
     const id = req.params.id;
-    console.log('params >>>', id)
-    res.status(200).json({message: 'From the API'});
+
+    const todoIndex = todos.indexOf(req.params.id);
+    if(todoIndex === -1) {
+        return res.status(404).json({message: 'Id not Found'});
+    }
+    const { data } = req.body;
+    todos[todoIndex] = data;
+
+    res.status(200).json({message: 'Updated Id Successfully'});
 });
 module.exports = router;
